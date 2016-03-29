@@ -79,9 +79,43 @@ void testException(){
     
     throw exception1();
 }
-int main(int argc, const char * argv[]) {
-    // int afteruse();//先声明后定义不友好
+
+
+
+
+//模板
+template <class T>T Add(T one ,T two){
+    return one+two;
+}
+//template <<#template parameters#>>
+//class <#class name#> {
+//    <#instance variables#>
+//    
+//public:
+//    <#member functions#>
+//};
+
+//内联函数在程序运行时会被复制到调用位置，导致程序变大
+//使用不频繁且代码量不大的函数才适合做内联函数已提高执行效率，减少指令集间的跳转
+inline void inlinefun(){}
+
+//变长参数测试
+void testVariableParam(int i , ...){
+    va_list ap;
+    va_start(ap, i);
+    cout<<va_arg(ap, char*)<<"\n";
+    cout<<va_arg(ap, int)<<"\n";
+    cout<<va_arg(ap, char*)<<"\n";
+    va_end(ap);
     
+}
+
+
+
+ int afteruse();//先声明后使用
+int main(int argc, const char * argv[]) {
+//     int afteruse();//在函数内先声明不友好
+    cout<<"test tmplate "<<Add(1,2)<<"\n";
     try{
         testException();
     }catch(exception1){
@@ -89,8 +123,9 @@ int main(int argc, const char * argv[]) {
     }catch(...){
         cout<<"其他错误"<<"\n";
     }
-    
-    //  cout<<afteruse()<<"\n";
+    testVariableParam(4,"teaa",78,"tit");
+    testExit();
+      cout<<afteruse()<<"\n";
     for(int i=0;i<10;i++){
         printf("r=%d area=%f\n", i+1,area());
         cout<<"r="<<i+1<<" area="<<area()<<"\n";
@@ -103,7 +138,6 @@ int main(int argc, const char * argv[]) {
     cout<<"输入值为："<<i;
     testCstring();
     testFile();
-    testExit();
     // insert code here...
     printf("Hello, World!\n");
     return 0;
